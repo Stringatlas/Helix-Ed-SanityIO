@@ -1,15 +1,22 @@
 import {defineField, defineType} from 'sanity'
 
 export const courseType = defineType({
-  name: 'physicsCourse',
-  title: 'Physics Course',
+  name: 'course',
+  title: 'Course',
   type: 'document',
   fields: [
     {
       name: 'title',
       title: 'Title',
       type: 'string',
+        validation: (rule) => rule.required(),
     },
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      options: {source: 'title'},
+      validation: (rule) => rule.required(),
+    }),
     {
       name: 'season',
       title: 'Season',
@@ -34,17 +41,6 @@ export const courseType = defineType({
       name: 'syllabus',
       title: 'Syllabus',
       type: 'url',
-    },
-    {
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Open', value: 'open' },
-          { title: 'Closed', value: 'closed' },
-        ],
-      },
     },
     {
       name: 'studentDescription',
