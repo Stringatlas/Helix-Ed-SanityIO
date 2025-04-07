@@ -74,7 +74,7 @@ export const courseType = defineType({
       name: 'registrationOpen',
       title: 'Registration Open',
       type: 'boolean',
-      initialValue: true, // Default is checked (true)
+      initialValue: true,
     },
   ],
 });
