@@ -31,7 +31,7 @@ export const instructorType = defineType({
       options: {
         list: [
           { title: 'TA', value: 'TA' },
-          { title: 'Instructor', value: 'Instructor' },
+          { title: 'Teacher', value: 'Teacher' },
         ],
       },
       validation: rule => rule.required(),
