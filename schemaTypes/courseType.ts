@@ -102,12 +102,14 @@ export const courseType = defineType({
     select: {
       title: 'slug.current', // Use the slug as the main label
       subtitle: 'title',     // Optionally show the title as a subtitle
+      media: 'poster',       // Show the poster image in the preview
     },
     prepare(selection) {
-      const {title, subtitle} = selection
+      const {title, subtitle, media} = selection
       return {
         title: title || '(no slug)',
         subtitle: subtitle,
+        media: media,
       }
     }
   }
