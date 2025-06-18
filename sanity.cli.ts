@@ -5,6 +5,7 @@ export default defineCliConfig({
     projectId: 'snhw886v',
     dataset: 'production'
   },
+  studioHost: 'helix-ed',
   /**
    * Enable auto-updates for studios.
    * Learn more at https://www.sanity.io/docs/cli#auto-updates

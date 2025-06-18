@@ -26,11 +26,32 @@ export const courseType = defineType({
       name: 'subject',
       title: 'Subject',
       type: 'string',
+      validation: (rule) => rule.required(),
     },
     {
       name: 'description',
       title: 'Description',
       type: 'text',
+    },
+    {
+        name: 'featured',
+        title: 'Featured (Latest)',
+        type: 'boolean',
+        initialValue: false,
+        description: 'Mark this as the featured/latest course for this subject.',
+        validation: Rule =>
+          Rule.custom(async (featured, context) => {
+            if (!featured) return true;
+            const { document, getClient } = context;
+            if (!document || !document.subject) return 'Subject is required to check for featured uniqueness.';
+            const client = getClient({ apiVersion: '2024-01-01' });
+            const query = `*[_type == "course" && subject == $subject && featured == true && _id != $id][0]{_id}`;
+            const params = { subject: document.subject, id: document._id };
+            const existing = await client.fetch(query, params);
+            return existing
+              ? 'Another course for this subject is already featured.'
+              : true;
+          }),
     },
     {
       name: 'registrationForm',
@@ -77,4 +98,17 @@ export const courseType = defineType({
       initialValue: true,
     },
   ],
+  preview: {
+    select: {
+      title: 'slug.current', // Use the slug as the main label
+      subtitle: 'title',     // Optionally show the title as a subtitle
+    },
+    prepare(selection) {
+      const {title, subtitle} = selection
+      return {
+        title: title || '(no slug)',
+        subtitle: subtitle,
+      }
+    }
+  }
 });
