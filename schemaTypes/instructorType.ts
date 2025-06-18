@@ -18,10 +18,11 @@ export const instructorType = defineType({
       validation: rule => rule.required(),
     },
     {
-        name: 'subject',
-        title: 'Subject',
-        type: 'string',
-        validation: rule => rule.required(),
+        name: 'subjects',
+        title: 'Subjects',
+        type: 'array',
+        of: [{ type: 'string' }],
+        validation: rule => rule.required().min(1),
     },
     {
       name: 'role',
